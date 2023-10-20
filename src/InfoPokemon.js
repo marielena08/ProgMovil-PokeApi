@@ -13,7 +13,7 @@ function InfoPokemon({ route }) {
     }, []);
 
     const getPokemonImage = () => {
-        const id = route.params.url.split("/")[6];
+        const id = info.id;
         return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
     }
 

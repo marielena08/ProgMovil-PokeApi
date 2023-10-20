@@ -31,17 +31,17 @@ function Lista({ navigation, route }) {
             ) : (
                 <FlatList
                     data={pokemons}
-                    keyExtractor={(item) => item.name}
-                    renderItem={({ item }) => (
+                    keyExtractor={(pokemon) => pokemon.name}
+                    renderItem={({ item: pokemon }) => (
                         <TouchableOpacity 
                             style={styles.pokemonContainer}
-                            onPress={() => navigation.navigate('InfoPokemon', { url: item.url })}
+                            onPress={() => navigation.navigate('InfoPokemon', { url: `https://pokeapi.co/api/v2/pokemon/${pokemon.name}` })}
                         >
                             <Image 
                                 style={styles.pokemonImage}
-                                source={{ uri: getImageFromPokemonName(item.name) }}
+                                source={{ uri: getImageFromPokemonName(pokemon.name) }}
                             />
-                            <Text style={styles.pokemonName}>{item.name}</Text>
+                            <Text style={styles.pokemonName}>{pokemon.name}</Text>
                         </TouchableOpacity>
                     )}
                 />
