@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React from 'react';
-import { View, button, TouchableOpacity, Text, TextInput, StyleSheet, ImageBackground } from 'react-native';
+import { View, button, TouchableOpacity, Text, TextInput, StyleSheet, ImageBackground, Image } from 'react-native';
+import { useState, useEffect } from 'react';
 
 const genImages = {
     1: require('../assets/generaciones/1eraGeneración.jpg'),
@@ -12,22 +14,69 @@ const genImages = {
     8: require('../assets/generaciones/8vaGeneración.png'),
     9: require('../assets/generaciones/9naGeneración.jpeg'),
 
-  };
+};
 
 function Home({ navigation }) {
     function GenerationButton({ generation, title, navigation }) {
         return (
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Lista', { generation })}>
+            <TouchableOpacity style={styles.pokemonContainer} onPress={() => navigation.navigate('Lista', { generation })}>
                 <ImageBackground source={genImages[generation]} style={styles.imageBackground}>
                     <Text style={styles.buttonText}>{title}</Text>
                 </ImageBackground>
             </TouchableOpacity>
         );
     }
-    
+
+    //search pokemon by name
+    const [search, setSearch] = useState('');
+    const [pokemon, setPokemon] = useState({});
+
+    const getPokemon = async () => {
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${search.toLowerCase()}`)
+            .then(response => {
+                setPokemon(response.data);
+            })
+            .catch(error => {
+                console.error("Hubo un error al obtener el Pokémon:", error);
+            });
+    }
+
+    useEffect(() => {
+        if (search) {
+            getPokemon();
+        }
+    }, [search]);
+
+    //show pokemon if found
+    function Pokemon({ pokemon }) {
+        if (pokemon.id) {
+            return (
+                    <TouchableOpacity
+                        style={styles.pokemonContainer}
+                        onPress={() => navigation.navigate('InfoPokemon', { url: `https://pokeapi.co/api/v2/pokemon/${pokemon.name}` })}
+                    >
+                        <Image
+                            style={styles.pokemonImage}
+                            source={{ uri: pokemon.sprites.front_default }}
+                        />
+                        <Text style={styles.pokemonName}>{pokemon.name}</Text>
+                    </TouchableOpacity>
+            );
+        }
+    }
+
+
     return (
         <View style={styles.container}>
-            <TextInput style={styles.input} placeholder="Buscar Pokémon" />
+            <TextInput
+                style={styles.input}
+                placeholder="Buscar Pokémon"
+                onChangeText={text => setSearch(text)}
+            />
+
+            <Pokemon pokemon={pokemon} />
+
+            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>O elige una generación:</Text>
             <View style={styles.buttonContainer}>
                 <View style={styles.buttonColumn}>
                     <GenerationButton navigation={navigation} generation={1} title="Generación 1" />
@@ -87,6 +136,33 @@ const styles = StyleSheet.create({
         textShadowColor: 'rgba(0, 0, 0, 0.75)',
         textShadowOffset: { width: -1, height: 1 },
         textShadowRadius: 10
+    },
+    pokemonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        padding: 10,
+        marginVertical: 5,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOpacity: 0.26,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 8,
+        height: 120
+    },
+    pokemonImage: {
+        height: 150,
+        width: 150,
+        marginRight: 15,
+        borderRadius: 40,
+        shadowColor: '#000',
+        shadowOpacity: 0.26,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 8,
+    },
+    pokemonName: {
+        fontSize: 16,
+        fontWeight: 'bold'
     }
 });
 
