@@ -11,7 +11,11 @@ function Lista({ navigation, route }) {
     useEffect(() => {
         axios.get(url)
             .then(response => {
-                setPokemons(response.data.pokemon_species);
+                //oredenar por numero de pokemon
+                const pokemonList = response.data.pokemon_species.sort((a, b) => {
+                    return a.url.split('/')[6] - b.url.split('/')[6];
+                });
+                setPokemons(pokemonList);
             })
             .catch(error => {
                 console.error("Hubo un error al obtener los Pokémon:", error);

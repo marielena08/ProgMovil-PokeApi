@@ -26,6 +26,7 @@ export default function PokemonCard({ navigation, pokemonName }) {
                     source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png` }}
                 />
                 <Text style={styles.pokemonName}>{pokemon.name}</Text>
+                <Text style={{ fontSize: 16 }}>#{pokemon.id}</Text>
             </TouchableOpacity>
         );
     }
