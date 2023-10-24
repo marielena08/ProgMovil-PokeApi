@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import axios from 'axios';
 
 function InfoPokemon({ route }) {
@@ -18,7 +18,7 @@ function InfoPokemon({ route }) {
     }
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.containerStyle}>
             <Image 
                 source={{ uri: getPokemonImage() }}
                 style={styles.pokemonImage}
@@ -36,22 +36,23 @@ function InfoPokemon({ route }) {
                     <Text key={stat.stat.name}>{stat.stat.name}: {stat.base_stat}</Text>
                 ))}
             </View>
-
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         padding: 10,
-        alignItems: 'center',
         backgroundColor: '#A3DEC0' 
     },
+    containerStyle: {
+        alignItems: 'center',
+    },
     pokemonImage: {
-        width: 600,
-        height: 500,
+        width: 300,
+        height: 250,
         marginRight: 20,
         borderRadius: 150, 
         shadowColor: '#000',

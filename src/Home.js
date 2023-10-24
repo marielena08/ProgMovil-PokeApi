@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, button, TouchableOpacity, Text, TextInput, StyleSheet, ImageBackground, Image } from 'react-native';
+import { View, TouchableOpacity, Text, TextInput, StyleSheet, ImageBackground, ScrollView } from 'react-native';
 import { useState } from 'react';
 import PokemonCard from '../components/pokemonCard';
 
@@ -31,7 +31,7 @@ function Home({ navigation }) {
     const [pokemonName, setPokemonName] = useState('');
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <TextInput
                 style={styles.input}
                 placeholder="Buscar Pokémon"
@@ -56,30 +56,31 @@ function Home({ navigation }) {
                     <GenerationButton navigation={navigation} generation={8} title="Generación 8" />
                 </View>
             </View>
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        padding: 10,
-        backgroundColor: '#A3DEC0'
+      flex: 1,
+      flexDirection: 'column',
+      width: '100vw',
+      padding: 10,
+      backgroundColor: '#A3DEC0',
+      minHeight: '100%',
     },
     input: {
-        marginBottom: 20,
-        borderColor: '#ddd',
-        borderWidth: 1,
-        padding: 10,
-        borderRadius: 5
+      marginBottom: 20,
+      borderColor: '#ddd',
+      borderWidth: 1,
+      padding: 10,
     },
     buttonContainer: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between'
     },
     buttonColumn: {
         flexDirection: 'column',
-        width: '45%'
     },
     button: {
         backgroundColor: 'white',
