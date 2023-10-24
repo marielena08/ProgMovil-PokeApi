@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React from 'react';
 import { View, button, TouchableOpacity, Text, TextInput, StyleSheet, ImageBackground, Image } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import PokemonCard from '../components/pokemonCard';
 
 const genImages = {
     1: require('../assets/generaciones/1eraGeneración.jpg'),
@@ -28,53 +28,17 @@ function Home({ navigation }) {
     }
 
     //search pokemon by name
-    const [search, setSearch] = useState('');
-    const [pokemon, setPokemon] = useState({});
-
-    const getPokemon = async () => {
-        axios.get(`https://pokeapi.co/api/v2/pokemon/${search.toLowerCase()}`)
-            .then(response => {
-                setPokemon(response.data);
-            })
-            .catch(error => {
-                console.error("Hubo un error al obtener el Pokémon:", error);
-            });
-    }
-
-    useEffect(() => {
-        if (search) {
-            getPokemon();
-        }
-    }, [search]);
-
-    //show pokemon if found
-    function Pokemon({ pokemon }) {
-        if (pokemon.id) {
-            return (
-                    <TouchableOpacity
-                        style={styles.pokemonContainer}
-                        onPress={() => navigation.navigate('InfoPokemon', { url: `https://pokeapi.co/api/v2/pokemon/${pokemon.name}` })}
-                    >
-                        <Image
-                            style={styles.pokemonImage}
-                            source={{ uri: pokemon.sprites.front_default }}
-                        />
-                        <Text style={styles.pokemonName}>{pokemon.name}</Text>
-                    </TouchableOpacity>
-            );
-        }
-    }
-
+    const [pokemonName, setPokemonName] = useState('');
 
     return (
         <View style={styles.container}>
             <TextInput
                 style={styles.input}
                 placeholder="Buscar Pokémon"
-                onChangeText={text => setSearch(text)}
+                onChangeText={text => setPokemonName(text)}
             />
 
-            <Pokemon pokemon={pokemon} />
+            <PokemonCard navigation={navigation} pokemonName={pokemonName} />
 
             <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>O elige una generación:</Text>
             <View style={styles.buttonContainer}>
@@ -150,20 +114,6 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         height: 120
     },
-    pokemonImage: {
-        height: 150,
-        width: 150,
-        marginRight: 15,
-        borderRadius: 40,
-        shadowColor: '#000',
-        shadowOpacity: 0.26,
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 8,
-    },
-    pokemonName: {
-        fontSize: 16,
-        fontWeight: 'bold'
-    }
 });
 
 export default Home;
