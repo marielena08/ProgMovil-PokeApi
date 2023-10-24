@@ -25,8 +25,20 @@ export default function PokemonCard({ navigation, pokemonName }) {
                     style={styles.pokemonImage}
                     source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png` }}
                 />
-                <Text style={styles.pokemonName}>{pokemon.name}</Text>
-                <Text style={{ fontSize: 16 }}>#{pokemon.id}</Text>
+                <View style={{ flex: 1 }}>
+                    <Text style={{ fontSize: 16 }}>#{pokemon.id}</Text>
+                    <Text style={styles.pokemonName}>{pokemon.name}</Text>
+                    {/*tipos del pokemon*/}
+                    <View style={{ flexDirection: 'row' }}>
+                        {pokemon.types.map((type, index) => {
+                            return (
+                                <View key={index} style={{ backgroundColor: '#A3DEC0', borderRadius: 5, padding: 5, margin: 5 }}>
+                                    <Text style={{ fontSize: 16 }}>{type.type.name}</Text>
+                                </View>
+                            );
+                        })}
+                    </View>
+                </View>
             </TouchableOpacity>
         );
     }
