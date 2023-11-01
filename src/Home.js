@@ -44,16 +44,16 @@ function Home({ navigation }) {
             <View style={styles.buttonContainer}>
                 <View style={styles.buttonColumn}>
                     <GenerationButton navigation={navigation} generation={1} title="Generación 1" />
+                    <GenerationButton navigation={navigation} generation={2} title="Generación 2" />
                     <GenerationButton navigation={navigation} generation={3} title="Generación 3" />
+                    <GenerationButton navigation={navigation} generation={4} title="Generación 4" />
                     <GenerationButton navigation={navigation} generation={5} title="Generación 5" />
-                    <GenerationButton navigation={navigation} generation={7} title="Generación 7" />
-                    <GenerationButton navigation={navigation} generation={9} title="Generación 9" />
                 </View>
                 <View style={styles.buttonColumn}>
-                    <GenerationButton navigation={navigation} generation={2} title="Generación 2" />
-                    <GenerationButton navigation={navigation} generation={4} title="Generación 4" />
                     <GenerationButton navigation={navigation} generation={6} title="Generación 6" />
+                    <GenerationButton navigation={navigation} generation={7} title="Generación 7" />
                     <GenerationButton navigation={navigation} generation={8} title="Generación 8" />
+                    <GenerationButton navigation={navigation} generation={9} title="Generación 9" />
                 </View>
             </View>
         </ScrollView>

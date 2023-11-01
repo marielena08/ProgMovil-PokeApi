@@ -74,7 +74,7 @@ function InfoPokemon({ route }) {
                             <Text style={{ fontSize: 20 }}>{pokemon}</Text>
                         </View>
                         <Image
-                            source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png` }}
+                            source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${info.id + index}.png` }}
                             style={{ width: 50, height: 50, marginRight: 10 }}
                         />
                         {minLevel[index] && <Text> Evoluciona a - Nivel {minLevel[index]}</Text>}

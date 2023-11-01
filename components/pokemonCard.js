@@ -11,10 +11,12 @@ export default function PokemonCard({ navigation, pokemonName }) {
                 setPokemon(response.data);
             })
             .catch(error => {
+                setPokemon({ id: null });
                 console.error("Hubo un error al obtener el Pokémon:", error);
             });
     }, [pokemonName]);
 
+    //mostrar pokemon en pantalla si existe el pokemon en la api o no existe el pokemon en la api
     if (pokemon.id) {
         return (
             <TouchableOpacity
@@ -40,6 +42,20 @@ export default function PokemonCard({ navigation, pokemonName }) {
                     </View>
                 </View>
             </TouchableOpacity>
+        );
+    } else if (pokemon.id === null) {
+        return (
+            <View style={styles.pokemonContainer}>
+                <Text style={{ fontSize: 16 }}>No se encontró el Pokémon</Text>
+            </View>
+        );
+
+    }
+    else if (pokemon.id === null && pokemonName !== '') {
+        return (
+            <View style={styles.pokemonContainer}>
+                <Text style={{ fontSize: 16 }}>Buscando Pokémon...</Text>
+            </View>
         );
     }
 }
